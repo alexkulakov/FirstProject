@@ -38,7 +38,7 @@ public class Lemur {
     }
 
     public void live() {
-        List<String> stuff = Lists.newArrayList("book", "meat", "apple", "cake", "keyboard");
+        List<String> stuff = Lists.newArrayList("book", "meat", "apple", "cake");
         for (String meal : stuff) {
             try {
                 eat(meal);
