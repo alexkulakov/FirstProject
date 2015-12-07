@@ -1,13 +1,12 @@
 package me.student.lemur;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Lemur {
 
@@ -16,9 +15,13 @@ public class Lemur {
     private List<String> food = new ArrayList<>();
 
     {
-        fruits.add("apple");
-        fruits.add("orange");
-        fruits.add("guava");
+        try {
+            PropertiesConfiguration conf = new PropertiesConfiguration(Lemur.class.getResource("Lemur.properties"));
+            Collections.addAll(fruits, conf.getStringArray("foods"));
+
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setFood(List<String> food) {
@@ -31,7 +34,7 @@ public class Lemur {
 
     public void eat(String smth) {
         if (fruits.contains(smth)) {
-            fruits.add(smth);
+            getFood().add(smth);
         } else {
             throw new RuntimeException("I don't eat " + smth + "!");
         }
